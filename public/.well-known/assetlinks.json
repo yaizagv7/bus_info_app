@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "org.openrecyclemap",
+    "sha256_cert_fingerprints":
+    ["0B:B9:7B:19:E7:68:00:3B:7B:AF:B1:A9:CF:F3:79:8A:6E:B1:77:1F:7E:1C:58:EA:BF:4C:BA:F0:F0:21:A7:BD"]
+  }
+}]

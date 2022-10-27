@@ -1,0 +1,72 @@
+{
+  "message": {
+    "zoomIn": "",
+    "username": "",
+    "selectType": "",
+    "wasteDisposal": "",
+    "recyclingContainer": "",
+    "recyclingOrganization": "",
+    "organizationName": "",
+    "description": "",
+    "selected": "",
+    "available": "",
+    "selectFractions": "",
+    "addMode": "",
+    "addModeHint": "",
+    "loadDataError": "",
+    "saveNodeError": "",
+    "saveNodeSuccess": "",
+    "needAccount": "",
+    "aboutOsm": "",
+    "signUp": "",
+    "devBy": ""
+  },
+  "fraction": {
+    "wasteDisposal": "",
+    "anyRecycling": "",
+    "paper": "",
+    "cans": "",
+    "glass": "",
+    "glass_bottles": "",
+    "batteries": "",
+    "plastic": "",
+    "plastic_bottles": "",
+    "plastic_packaging": "",
+    "plastic_bags": "",
+    "hazardous_waste": "",
+    "clothes": "",
+    "low_energy_bulbs": "",
+    "scrap_metal": "",
+    "tyres": "",
+    "car_batteries": "",
+    "engine_oil": ""
+  },
+  "menu": {
+    "map": "",
+    "user": "",
+    "about": "",
+    "add": ""
+  },
+  "button": {
+    "toMap": "",
+    "logout": "",
+    "login": "",
+    "next": "",
+    "cancel": "",
+    "save": "",
+    "edit": "",
+    "josm": "",
+    "osmLink": "",
+    "seeMore": ""
+  },
+  "about": {
+    "app": "",
+    "dataHeader": "",
+    "data": "",
+    "contributingHeader": "",
+    "contributing": "",
+    "contact": "",
+    "androidHeader": "Android",
+    "android": ""
+  }
+}
