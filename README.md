@@ -11,7 +11,7 @@ Bus Info App es un proyecto basado en el código de Open Recycle Map que ayuda a
 
 - Instalar instalador de paquetes npm  https://nodejs.org/es/download/
 - Instalar vue https://vuejs.org/v2/guide/installation.html#NPM
-  `npm install vue`
+  `npm install vue@2.6.11`
 - Instalar vue/cli https://cli.vuejs.org/#getting-started 
   `npm install -g @vue/cli`
 
