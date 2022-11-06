@@ -1,160 +1,52 @@
 <template>
   <div class="map_filters">
     <div>
-        <span class="brand">Bus +Info Map</span>
+      <span class="brand">Bus +Info Map</span>
     </div>
-    <div
-      :class="['map_filter ico_all', { filter_active: filter.recycling }]"
-      @click="filter.invert('recycling')"
-    >
-      <span>{{ $t("fraction.anyRecycling") }}</span>
-    </div>
-    <!-- <div :class="['map_filter ico_notags', {filter_active: filter.recycling}]" @click="filter.invert('recycling')">
-            <span>{{ $t('fraction.no_tags') }}</span>
-        </div> FIXME -->
-    <div
-      :class="['map_filter ico_plastic', { filter_active: filter.plastic }]"
-      @click="filter.invert('plastic')"
-    >
-      <span>{{ $t("fraction.plastic") }}</span>
-    </div>
-    <div
-      :class="[
-        'map_filter ico_plastic_bottles',
-        { filter_active: filter.plastic_bottles },
-      ]"
-      @click="filter.invert('plastic_bottles')"
-    >
-      <span>{{ $t("fraction.plastic_bottles") }}</span>
-    </div>
-    <div
-      :class="[
-        'map_filter ico_glass_bottles',
-        { filter_active: filter.glass_bottles },
-      ]"
-      @click="filter.invert('glass_bottles')"
-    >
-      <span>{{ $t("fraction.glass_bottles") }}</span>
-    </div>
-    <div
-      :class="['map_filter ico_glass', { filter_active: filter.glass }]"
-      @click="filter.invert('glass')"
-    >
-      <span>{{ $t("fraction.glass") }}</span>
-    </div>
-    <div
-      :class="['map_filter ico_paper', { filter_active: filter.paper }]"
-      @click="filter.invert('paper')"
-    >
-      <span>{{ $t("fraction.paper") }}</span>
-    </div>
-    <div
-      :class="['map_filter ico_cans', { filter_active: filter.cans }]"
-      @click="filter.invert('cans')"
-    >
-      <span>{{ $t("fraction.cans") }}</span>
-    </div>
-    <div
-      :class="['map_filter ico_clothes', { filter_active: filter.clothes }]"
-      @click="filter.invert('clothes')"
-    >
-      <span>{{ $t("fraction.clothes") }}</span>
-    </div>
-    <div
-      :class="[
-        'map_filter ico_scrap_metal',
-        { filter_active: filter.scrap_metal },
-      ]"
-      @click="filter.invert('scrap_metal')"
-    >
-      <span>{{ $t("fraction.scrap_metal") }}</span>
-    </div>
-    <div
-      :class="[
-        'map_filter ico_low_energy_bulbs',
-        { filter_active: filter.low_energy_bulbs },
-      ]"
-      @click="filter.invert('low_energy_bulbs')"
-    >
-      <span>{{ $t("fraction.low_energy_bulbs") }}</span>
-    </div>
-    <div
-      :class="['map_filter ico_batteries', { filter_active: filter.batteries }]"
-      @click="filter.invert('batteries')"
-    >
-      <span>{{ $t("fraction.batteries") }}</span>
-    </div>
-    <div
-      :class="['map_filter ico_tyres', { filter_active: filter.tyres }]"
-      @click="filter.invert('tyres')"
-    >
-      <span>{{ $t("fraction.tyres") }}</span>
-    </div>
-    <div
-      :class="[
-        'map_filter ico_plastic_bags',
-        { filter_active: filter.plastic_bags },
-      ]"
-      @click="filter.invert('plastic_bags')"
-      v-if="showAll"
-    >
-      <span>{{ $t("fraction.plastic_bags") }}</span>
-    </div>
-    <div
-      :class="[
-        'map_filter ico_hazardous_waste',
-        { filter_active: filter.hazardous_waste },
-      ]"
-      @click="filter.invert('hazardous_waste')"
-      v-if="showAll"
-    >
-      <span>{{ $t("fraction.hazardous_waste") }}</span>
-    </div>
-    <div
-      :class="[
-        'map_filter ico_car_batteries',
-        { filter_active: filter.car_batteries },
-      ]"
-      @click="filter.invert('car_batteries')"
-      v-if="showAll"
-    >
-      <span>{{ $t("fraction.car_batteries") }}</span>
-    </div>
-    <div
-      :class="[
-        'map_filter ico_engine_oil',
-        { filter_active: filter.engine_oil },
-      ]"
-      @click="filter.invert('engine_oil')"
-      v-if="showAll"
-    >
-      <span>{{ $t("fraction.engine_oil") }}</span>
-    </div>
-    <div
-      v-if="!showAll"
-      class="map_filter ico_dots"
-      @click="showAll = !showAll"
-    >
-      <span>{{ $t("button.seeMore") }}</span>
-    </div>
-    <div
-      :class="[
-        'map_filter ico_waste_disposal',
-        { filter_active: filter.waste_disposal },
-      ]"
-      @click="filter.invert('waste_disposal')"
-    >
-      <span>{{ $t("fraction.wasteDisposal") }}</span>
+    <div class="menu-list">
+      <ul>
+        <li
+          v-for="item in menu"
+          :key="item.name"
+          @click="item.isOpen = !item.isOpen"
+        >
+          <hr
+            style="
+              opacity: 0.1;
+              background-color: black;
+              width: 90%;
+              margin-top: 30px;
+              margin-bottom: 0px;
+            "
+          />
+          <div class="menu1">
+            {{ item.name }}
+          </div>
+          <ul class="menu2" v-show="item.isOpen">
+            <li v-for="child in item.children" :key="child.name">
+              <div
+                v-show="item.isOpen"
+                :class="['map_filter']"
+              >
+                {{ child.name }}
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
+import menu_data from "../../menu-data.json";
+
 export default {
   name: "nodes-filter",
   props: ["filter"],
   data: function () {
     return {
+      menu: menu_data,
       showAll: false,
     };
   },
@@ -171,33 +63,72 @@ export default {
 
 <style>
 .map_filters {
-    background-color: rgb(250, 250, 250);
-    overflow: auto;
-    font-size: 16px;
-    position: fixed;
-    top: 5px;
-    margin-left: 5px;
-    width: 240px;
-    height: 98%;
-    border-radius: 10px;
-    box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.3);
+  background-color: rgb(250, 250, 250);
+  overflow: auto;
+  font-size: 16px;
+  position: fixed;
+  top: 5px;
+  margin-left: 5px;
+  width: 240px;
+  height: 98%;
+  border-radius: 10px;
+  box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.3);
 }
 .brand {
-    display: inline-block;
-    color: rgb(255, 255, 255);
-    background-color: rgb(99, 0, 0);
-    border: 2px rgb(99, 0, 0) solid;
-    border-radius: 30px;
-    line-height: 20px;
-    margin-bottom: 20px;
-    margin-left: 20px;
-    margin-top: 20px;
-    padding-left: 22px;
-    padding-right: 22px;
-    font-size: 16px;
-    font-family: Arial, Helvetica, sans-serif;
+  display: inline-block;
+  color: rgb(255, 255, 255);
+  background-color: rgb(99, 0, 0);
+  border: 2px rgb(99, 0, 0) solid;
+  border-radius: 30px;
+  line-height: 20px;
+  margin-bottom: 20px;
+  margin-left: 40px;
+  margin-top: 20px;
+  padding-left: 22px;
+  padding-right: 22px;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
   /*text-shadow: black 0.1em 0.1em 0.2em;*/
   /*background: linear-gradient(to bottom, rgb(99, 0, 0) 75%, rgb(250, 250, 250) 100%);*/
+}
+.menu1 {
+  padding-top: 5px;
+  background-position: left 0px;
+  height: 35px;
+  font-size: large;
+  font-weight: bolder;
+  text-align: left;
+  cursor: pointer;
+}
+ul .menu2 {
+  padding-left: 0px;
+}
+
+.map_filter {
+    border: 1px rgba(99, 0, 0, 0) solid;
+    background-color: rgb(99, 0, 0);
+    color: white;
+    margin: 2px;
+    padding: 5px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: 95% 50%;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 20px;
+    position: relative;
+    border-radius: 4px;
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    line-height: 1em;
+    overflow-wrap: break-word;
+    width: 95%;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+ul, li {
+    list-style: none;
 }
 @media screen and (max-width: 700px) {
   .map_filters {
@@ -208,7 +139,7 @@ export default {
 }
 @media screen and (min-width: 700px) {
   .map_filter:hover {
-    background-color: #eee;
+    background-color: rgb(0, 0, 0);
   }
 }
 .filter_active:before {
@@ -223,43 +154,11 @@ export default {
   left: 5px;
   /*box-shadow: #d5afff 0 -4px 0 0 inset;*/
 }
-.ico_waste_disposal.filter_active:before {
-  background: #8d6e63 !important;
-}
-.map_filter.ico_waste_disposal:hover:before {
-  border-color: #8d6e63;
-}
+
 .map_filter.ico_dots:before {
   display: none !important;
 }
-.map_filter:hover:before {
-  width: 15px;
-  height: 15px;
-  border-radius: 15px;
-  content: "";
-  display: block;
-  border: 1px solid #2e7d32;
-  background: white;
-  position: absolute;
-  top: 10px;
-  left: 5px;
-}
-.map_filter {
-  margin: 2px;
-  padding: 5px;
-  cursor: pointer;
-  background-repeat: no-repeat;
-  background-position: center 5px;
-  padding-top: 45px;
-  position: relative;
-  border-radius: 8px;
-  text-align: center;
-  line-height: 1em;
-  overflow-wrap: break-word;
-  width: 73px;
-  font-size: 13px;
-  user-select: none;
-}
+
 .ico_dots {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg width='40' height='40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='20' r='2.5' fill='%23000'/%3E%3Ccircle cx='20' cy='20' r='2.5' fill='%23000'/%3E%3Ccircle cx='30' cy='20' r='2.5' fill='%23000'/%3E%3C/svg%3E");
 }
