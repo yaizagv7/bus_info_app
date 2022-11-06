@@ -1,0 +1,194 @@
+[
+    {
+        "id": 0,
+        "name": "Transporte",
+        "icon": "icon_transport",
+        "children": [
+            {
+                "name": "Paradas de autobus",
+                "icon": "icon_bus",
+                "children": [
+                    {
+                        "name": "L01 Av. Arlanzon > Gamonal",
+                        "selected": false
+                    },
+                    {
+                        "name": "L01 Gamonal > Av.Arlanzon",
+                        "selected": false
+                    },
+                    {
+                        "name": "L02 Ctra. Arcos > FFCC",
+                        "selected": false
+                    },
+                    {
+                        "name": "L02 FFCC > Ctra. Arcos  ",
+                        "selected": false
+                    },
+                    {
+                        "name": "L03 V. Alegre > S.J Bautista",
+                        "selected": false
+                    },
+                    {
+                        "name": "L03 S.J Bautista > V. Alegre",
+                        "selected": false
+                    },
+                    {
+                        "name": "L04 Castañares > D. Vallés",
+                        "selected": false
+                    },
+                    {
+                        "name": "L04 D. Vallés > Castañares",
+                        "selected": false
+                    },
+                    {
+                        "name": "L05 V.Alegre <> El Pilar",
+                        "selected": false
+                    },
+                    {
+                        "name": "L05  El Pilar > V.Alegre",
+                        "selected": false
+                    },
+                    {
+                        "name": "L06  Plz España <> I.G.Rámila",
+                        "selected": false
+                    },
+                    {
+                        "name": "L06  I.G.Rámila > Plz España",
+                        "selected": false
+                    },
+                    {
+                        "name": "L07 V.Alegre <> El Pilar",
+                        "selected": false
+                    },
+                    {
+                        "name": "L07 El Pilar > V.Alegre",
+                        "selected": false
+                    },
+                    {
+                        "name": "L08 G. Teatro <> Villafría",
+                        "selected": false
+                    },
+                    {
+                        "name": "L08 Villafría > G. Teatro",
+                        "selected": false
+                    },
+                    {
+                        "name": "L09 Plz España <> Cortes",
+                        "selected": false
+                    },
+                    {
+                        "name": "L09 Cortes > Plz España",
+                        "selected": false
+                    },
+                    {
+                        "name": "L10 G. Teatro <> DDHH",
+                        "selected": false
+                    },
+                    {
+                        "name": "L10 DDHH > G. Teatro",
+                        "selected": false
+                    },
+                    {
+                        "name": "L11 Plz España <> Villímar",
+                        "selected": false
+                    },
+                    {
+                        "name": "L11 Villímar > Plz España ",
+                        "selected": false
+                    },
+                    {
+                        "name": "L12 El Pilar <> FFCC",
+                        "selected": false
+                    },
+                    {
+                        "name": "L12 FFCC > El Pilar",
+                        "selected": false
+                    },
+                    {
+                        "name": "L13 Gamonal <> D. Vallés",
+                        "selected": false
+                    },
+                    {
+                        "name": "L13 D. Vallés > Gamonal",
+                        "selected": false
+                    },
+                    {
+                        "name": "L14 Plz España <> Villatoro",
+                        "selected": false
+                    },
+                    {
+                        "name": "L14 Villatoro > Plz España",
+                        "selected": false
+                    },
+                    {
+                        "name": "L15 Sop. Antón > C. Histórico",
+                        "selected": false
+                    },
+                    {
+                        "name": "L15 S.A > C.H (Tardes)",
+                        "selected": false
+                    },
+                    {
+                        "name": "L16 Ctra. Arcos > HUBU",
+                        "selected": false
+                    },
+                    {
+                        "name": "L16 HUBU > Ctra. Arcos",
+                        "selected": false
+                    },
+                    {
+                        "name": "L17 Plz España > FB (Verano)",
+                        "selected": false
+                    },
+                    {
+                        "name": "L17 FB > Plz España (Verano)",
+                        "selected": false
+                    },
+                    {
+                        "name": "L18 Fuentecillas -> Cid",
+                        "selected": false
+                    },
+                    {
+                        "name": "L18 Cid > Fuentecillas",
+                        "selected": false
+                    },
+                    {
+                        "name": "L19 Cid > Villalonquejar",
+                        "selected": false
+                    },
+                    {
+                        "name": "L19 Villalonquejar > Cid ",
+                        "selected": false
+                    },
+                    {
+                        "name": "L20 Plz España > FB ",
+                        "selected": false
+                    },
+                    {
+                        "name": "L20 FB > Plz España ",
+                        "selected": false
+                    },
+                    {
+                        "name": "L21 Cortes -> Plz España",
+                        "selected": false
+                    },
+                    {
+                        "name": "L21 Plz España -> Cortes",
+                        "selected": false
+                    },
+                    {
+                        "name": "L22 Bulevar > HUBU",
+                        "selected": false
+                    },
+                    {
+                        "name": "L22 HUBU > Bulevar",
+                        "selected": false
+                    }
+                ],
+                "selected": false,
+                "isOpen": false
+            }
+        ],
+        "isOpen": false
+    }
+]
