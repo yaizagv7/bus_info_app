@@ -1,5 +1,8 @@
 <template>
   <div class="map_filters">
+    <div>
+        <span class="brand">Bus +Info Map</span>
+    </div>
     <div
       :class="['map_filter ico_all', { filter_active: filter.recycling }]"
       @click="filter.invert('recycling')"
@@ -168,16 +171,33 @@ export default {
 
 <style>
 .map_filters {
-  background-color: rgb(250, 250, 250);
-  overflow: auto;
-  font-size: 16px;
-  position: fixed;
-  top: 5px;
-  margin-left: 5px;
-  width: 280px;
-  height: 98%;
-  border-radius: 10px;
-  box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.3);
+    background-color: rgb(250, 250, 250);
+    overflow: auto;
+    font-size: 16px;
+    position: fixed;
+    top: 5px;
+    margin-left: 5px;
+    width: 240px;
+    height: 98%;
+    border-radius: 10px;
+    box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.3);
+}
+.brand {
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    background-color: rgb(99, 0, 0);
+    border: 2px rgb(99, 0, 0) solid;
+    border-radius: 30px;
+    line-height: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-top: 20px;
+    padding-left: 22px;
+    padding-right: 22px;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+  /*text-shadow: black 0.1em 0.1em 0.2em;*/
+  /*background: linear-gradient(to bottom, rgb(99, 0, 0) 75%, rgb(250, 250, 250) 100%);*/
 }
 @media screen and (max-width: 700px) {
   .map_filters {

@@ -407,8 +407,8 @@
     }
     .orm_logo_map {
         position:absolute;
-        top:15px;
-        left:15px;
+        bottom:25px;
+        right:15px;
         z-index: 1;
     }
     .leaflet-control-locate {
