@@ -11,11 +11,9 @@
           @click="item.isOpen = !item.isOpen"
         >
           <hr
-            style="
-              opacity: 0.1;
-              background-color: black;
+            style="opacity: 0.1; background-color: black;
               width: 90%;
-              margin-top: 30px;
+              margin-top: 30;
               margin-bottom: 0px;
             "
           />
@@ -23,13 +21,20 @@
             {{ item.name }}
           </div>
           <ul class="menu2" v-show="item.isOpen">
-            <li v-for="child in item.children" :key="child.name">
-              <div
-                v-show="item.isOpen"
-                :class="['map_filter']"
-              >
+            <li v-for="child in item.children" :key="child.name" @click="child.isOpen = !child.isOpen">
+              <div v-show="item.isOpen" :class="['map_filter']" >
                 {{ child.name }}
               </div>
+              <ul class="menu3" v-show="child.isOpen && item.isOpen">
+                <li v-for="child2 in child.children" :key="child2.name">
+                  <div
+                    v-show="child.isOpen"
+                    :class="['map_filter']"
+                  >
+                    {{ child2.name }}
+                  </div>
+                </li>
+              </ul>
             </li>
           </ul>
         </li>
@@ -105,30 +110,31 @@ ul .menu2 {
 }
 
 .map_filter {
-    border: 1px rgba(99, 0, 0, 0) solid;
-    background-color: rgb(99, 0, 0);
-    color: white;
-    margin: 2px;
-    padding: 5px;
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 95% 50%;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    padding-left: 20px;
-    position: relative;
-    border-radius: 4px;
-    display: flex;
-    justify-content: flex-start;
-    align-content: center;
-    line-height: 1em;
-    overflow-wrap: break-word;
-    width: 95%;
-    font-size: 14px;
-    box-sizing: border-box;
+  border: 1px rgba(99, 0, 0, 0) solid;
+  background-color: rgb(99, 0, 0);
+  color: white;
+  margin: 2px;
+  padding: 5px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: 95% 50%;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 20px;
+  position: relative;
+  border-radius: 4px;
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  line-height: 1em;
+  overflow-wrap: break-word;
+  width: 95%;
+  font-size: 14px;
+  box-sizing: border-box;
 }
-ul, li {
-    list-style: none;
+ul,
+li {
+  list-style: none;
 }
 @media screen and (max-width: 700px) {
   .map_filters {
