@@ -21,11 +21,11 @@
             {{ item.name }}
           </div>
           <ul class="menu2" v-show="item.isOpen">
-            <li v-for="child in item.children" :key="child.name" @click="child.isOpen = !child.isOpen">
+            <li v-for="child in item.children" :key="child.name" @click.stop.prevent="child.isOpen = !child.isOpen">
               <div v-show="item.isOpen" :class="['map_filter']" >
                 {{ child.name }}
               </div>
-              <ul class="menu3" v-show="child.isOpen && item.isOpen">
+              <ul class="menu3" v-show="item.isOpen && child.isOpen">
                 <li v-for="child2 in child.children" :key="child2.name">
                   <div
                     v-show="child.isOpen"
