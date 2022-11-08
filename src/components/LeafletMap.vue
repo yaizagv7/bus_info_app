@@ -281,9 +281,6 @@
     .zoom_btn:hover {
         background:#eee;
     }
-    .add_mode .orm_position {
-        /*bottom:80px;*/
-    }
     .orm_position {
             top:140px;
         right:20px;
