@@ -15,6 +15,11 @@ export default class OverpassQuery {
         tags.forEach((tag) => this.query += '  way["'+tag.k+'"="'+tag.v+'"]('+bbox+');\n');
         return this;
     }
+    relationByTag(tag) {
+        this.query += '  rel('+tag+');\n(._;>>;);';
+        this.print = ');\nout body;';
+        return this;
+    }
     get qlString() {
         return '[out:json][timeout:25];\n' +
             '(\n' +

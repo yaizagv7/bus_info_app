@@ -30,7 +30,7 @@
     export default {
         data: function () {
             return {
-                title: 'OpenRecycleMap'
+                title: 'Bus +Info mApp'
             }
         },
         methods: {

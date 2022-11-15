@@ -30,6 +30,8 @@
                   <div
                     v-show="child.isOpen"
                     :class="['map_filter']"
+                    @click.stop.prevent="
+                      $emit('launch-query', child2.tags)"
                   >
                     {{ child2.name }}
                   </div>

@@ -42,19 +42,39 @@ export default {
             this.bounds = bounds;
             return this.bboxToString(bounds);
         },
-        buildQuery: function (center) {
+        buildQuery: function (center, key, valor) {
             let bbox = this.bboxFromCenter(center);
             let query = new OverpassQuery();
             let tags = [
-                {k: 'amenity', v: 'recycling'},
-                {k: 'amenity', v: 'waste_disposal'}
+                {k: key, v: valor}
             ];
             return query.nodeByTags(tags, bbox).body;
         },
-        fetchAmenity: function (center, callback, errorCallback) {
+        buildQueryRelation: function (center, valor) {
+            let bbox = this.bboxFromCenter(center);
+            let query = new OverpassQuery();
+            let tag = valor;
+            //console.log(query.nodeByTagsDouble(tags, bbox).body);
+            return query.relationByTag(tag).body;
+        },
+        fetchAmenity: function (center, callback, errorCallback, key, valor) {
             fetch(process.env.VUE_APP_OVERPASS_URL, {
                 method: 'POST',
-                body: this.buildQuery(center)
+                body: this.buildQuery(center, key, valor)
+            })
+                .then(function (response) {
+                    if(!response.ok) {
+                        throw new Error(response.status);
+                    }
+                    return response.json();
+                })
+                .then(callback)
+                .catch(errorCallback);
+        },
+        fetchRelation: function (center, callback, errorCallback, value) {
+            fetch(process.env.VUE_APP_OVERPASS_URL, {
+                method: 'POST',
+                body: this.buildQueryRelation(center, value)
             })
                 .then(function (response) {
                     if(!response.ok) {
