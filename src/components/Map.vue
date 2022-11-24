@@ -28,18 +28,9 @@
       v-on:map-change="onMapChange"
     ></leaflet-map>
 
-    <fractions-form
-      :selected="selected"
-      :labels="labels"
-      v-if="edit_tags"
-      v-on:form-cancel="disableAddMode"
-      v-on:form-save="saveData"
-    ></fractions-form>
-
     <node-info
       :key="selectedId"
       :selected="selected"
-      :labels="labels"
       v-if="selectedLayer"
       v-on:close-info="deselectLayer"
       v-on:edit-click="goEdit"
@@ -185,7 +176,6 @@ export default {
             component.selectedLayer = layer;
             component.selected = {
               props: geoJsonProps,
-              fractions: component.parseFractions(geoJsonProps),
               node_id: sel_id,
               node_type: sel_type,
             };
@@ -412,26 +402,7 @@ export default {
           component.loadData(params);
         }
       });
-    },
-    parseFractions: function (geoJsonProps) {
-      let nodeTypes = [];
-      if (
-        geoJsonProps.hasOwnProperty("amenity") &&
-        geoJsonProps["amenity"] === "waste_disposal"
-      ) {
-        nodeTypes.push("waste_disposal");
-      } else {
-        for (let key in this.labels) {
-          if (
-            geoJsonProps.hasOwnProperty("recycling:" + key) &&
-            geoJsonProps["recycling:" + key] === "yes"
-          ) {
-            nodeTypes.push(key);
-          }
-        }
-      }
-      return nodeTypes;
-    },
+    }
   },
   mounted() {
     this.authInit();
