@@ -11,7 +11,8 @@
           @click="item.isOpen = !item.isOpen"
         >
           <hr
-            style="opacity: 0.1; background-color: black;
+            style="opacity: 0.1; 
+            background-color: black;
               width: 90%;
               margin-top: 30;
               margin-bottom: 0px;
@@ -22,7 +23,11 @@
           </div>
           <ul class="menu2" v-show="item.isOpen">
             <li v-for="child in item.children" :key="child.name" @click.stop.prevent="child.isOpen = !child.isOpen">
-              <div v-show="item.isOpen" :class="['map_filter']" >
+              <div v-if="child.children" v-show="item.isOpen" :class="['map_filter']" >
+                {{ child.name }}
+              </div>
+              <div v-else-if="!child.children" v-show="item.isOpen" :class="['map_filter']" @click.stop.prevent="
+                      $emit('launch-query', child.tags)" >
                 {{ child.name }}
               </div>
               <ul class="menu3" v-show="item.isOpen && child.isOpen">

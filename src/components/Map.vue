@@ -48,7 +48,6 @@
 
     <nodes-filter
       v-on:launch-query="loadData"
-      :filter="filter"
       v-if="!selectedLayer && !add_mode"
     ></nodes-filter>
     <v-snackbar v-model="snackbar" top multi-line>
@@ -90,7 +89,6 @@ export default {
       snackbar: false,
       marker: null,
       layer: null,
-      filter: new Filter(),
       lastData: null,
     };
   },
@@ -129,26 +127,46 @@ export default {
         weight: 0,
       }).addTo(map);
       let ovData = osmtogeojson(data);
+      console.log(ovData);
       this.layer = L.geoJson(ovData, {
         style: function (feature) {
-          var color =
-            feature.properties.amenity === "recycling"
-              ? "#ff0000" // RED - Show nodes with no factions in red (materials not specified)
-              : "#8D6E63"; // BROWN
-          for (let key in feature.properties) {
-            if (key.startsWith("recycling:")) {
-              // recycling:* - display in green
-              color = "#2E7D32"; // GREEN
-            }
+            let color = "#2A2A2A"; // white
+          if (
+            feature.properties.public_transport == "platform" ||
+            feature.properties.hasOwnProperty("amenity") ||
+            feature.properties.hasOwnProperty("tourism") ||
+            feature.properties.hasOwnProperty("parking")
+          ) {
+            return {
+              opacity: 1,
+              fillOpacity: 1,
+              color: "darkred",
+              fillColor: color,
+              weight: 1,
+              radius: 6,
+              zIndex: 5,
+            };
+          } else if (feature.id.includes("way")) {
+            return {
+              //pointerEvents: none,
+              opacity: 1,
+              //fillOpacity: 0,
+              color: "black",
+              //fillColor: "white",
+              weight: 3,
+              radius: 1,
+            };
+          } else {
+            return {
+              //display: none,
+              opacity: 0,
+              fillOpacity: 0,
+              color: "white",
+              fillColor: "pink",
+              weight: 1,
+              radius: 1,
+            };
           }
-          return {
-            opacity: 1,
-            fillOpacity: 1,
-            color: "white",
-            fillColor: color,
-            weight: 1,
-            radius: 8,
-          };
         },
         onEachFeature: function (feature, layer) {
           layer.on("click", function (ev) {
@@ -240,7 +258,7 @@ export default {
     disableAddMode: function () {
       this.set_coord_mode = false;
       this.marker = null;
-      this.displayData(this.lastData, this.filter);
+      this.displayData(this.lastData);
       this.edit_tags = false;
       this.add_mode = false;
       this.$router.push({ name: "map" });
@@ -438,9 +456,8 @@ export default {
 <style>
 .main_loading {
   position: fixed !important;
-  bottom: 140px;
-  bottom: 200px;
-  left: 20px;
+  bottom: 50%;
+  left: 50%;
   z-index: 9;
 }
 .map_root {

@@ -411,7 +411,41 @@
 		],
 		"isOpen": false
 	},{
-        "id": 1,
-        "name": "Prueba1"
-    }
+		"id": 1,
+		"name": "Servicios",
+		"icon": "icon_services",
+		"children": [
+			{
+				"name": "Agua potable",
+				"tags": [
+					[
+						"amenity",
+						"drinking_water"
+					]
+				],
+				"selected": false
+			},
+			{
+				"name": "WC",
+				"tags": [
+					[
+						"amenity",
+						"toilets"
+					]
+				],
+				"selected": false
+			},
+			{
+				"name": "ATM",
+				"tags": [
+					[
+						"atm",
+						"yes"
+					]
+				],
+				"selected": false
+			}
+		],
+		"isOpen": false
+	}
 ]
