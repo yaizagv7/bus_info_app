@@ -123,27 +123,27 @@ export default {
           if (
             feature.properties.public_transport == "platform" ||
             feature.properties.hasOwnProperty("amenity") ||
-            feature.properties.hasOwnProperty("tourism") ||
             feature.properties.hasOwnProperty("parking")
           ) {
             return {
               opacity: 1,
               fillOpacity: 1,
-              color: "darkred",
+              color: "darkRed",
               fillColor: color,
               weight: 1,
               radius: 6,
               zIndex: 5,
             };
           } else if (feature.id.includes("way")) {
+            //console.log(feature);
             return {
               //pointerEvents: none,
               opacity: 1,
-              //fillOpacity: 0,
-              color: "black",
+              fillOpacity: 0,
+              color: "darkRed",
               //fillColor: "white",
               weight: 3,
-              radius: 1,
+              radius:1
             };
           } else {
             return {
@@ -159,6 +159,7 @@ export default {
         },
         onEachFeature: function (feature, layer) {
           layer.on("click", function (ev) {
+            console.log(feature.id);
             L.DomEvent.stopPropagation(ev);
             if (component.add_mode || component.edit_tags) {
               return;
@@ -186,9 +187,6 @@ export default {
               params: { node: sel_id, type: sel_type },
             });
           });
-          if (feature.properties.id === to_select) {
-            layer.fire("click");
-          }
         },
         pointToLayer: function (geoJsonPoint, latlng) {
           return new L.CircleMarker(latlng);

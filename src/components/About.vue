@@ -17,7 +17,7 @@
             
             <div class="about_top">    
                 <i18n path="about.app" tag="div" class="about_app">
-                    <b>OpenRecycleMap</b>
+                    <b>Bis +Info mApp</b>
                 </i18n>
                 <v-select :items="languages" v-model="$i18n.locale" @change="changeLang" solo label="Language" class="language-select"></v-select>
             </div>

@@ -74,6 +74,32 @@ export default {
 </script>
 
 <style>
+.map_filters::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.map_filters::-webkit-scrollbar:vertical {
+  width: 10px;
+}
+
+.map_filters::-webkit-scrollbar-button:increment,
+.contenedor::-webkit-scrollbar-button {
+  display: none;
+}
+
+.map_filters::-webkit-scrollbar:horizontal {
+  height: 10px;
+}
+
+.map_filters::-webkit-scrollbar-thumb {
+  background-color: #797979;
+  border-radius: 20px;
+  border: 2px solid #f1f2f3;
+}
+
+.map_filters::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
 .map_filters {
   background-color: rgb(250, 250, 250);
   overflow: auto;

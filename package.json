@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "firebase": "^9.14.0",
     "leaflet": "^1.5.1",
     "leaflet.locatecontrol": "^0.67.0",
     "leaflet.snogylop": "^0.4.0",
