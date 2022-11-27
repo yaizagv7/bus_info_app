@@ -57,7 +57,6 @@ import overpassMixin from "../mixins/Overpass";
 import oauthMixin from "../mixins/Oauth";
 import NodesFilter from "./NodesFilter";
 import NodeInfo from "./NodeInfo";
-import FractionsForm from "./FractionsForm";
 //import Filter from "../mixins/Filter";
 import LeafletMap from "./LeafletMap";
 import L from "leaflet";
@@ -86,7 +85,6 @@ export default {
   components: {
     NodesFilter,
     NodeInfo,
-    FractionsForm,
     LeafletMap,
   },
   mixins: [overpassMixin, oauthMixin],
@@ -411,7 +409,7 @@ export default {
     }
   },
   watch: {
-    $route(to, from) {
+    $route(to) {
       if (to.name === "node") {
         //this.loadNode(to.params);
       } else {

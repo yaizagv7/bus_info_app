@@ -1,9 +1,9 @@
 <template>
   <div class="node_info">
     <span class="p_close" @click="closePopup">×</span>
-    <table>
-        <th>{{node_name}}</th>
-      <tr v-for="(item, key) in all_tags" :key="key" class="node_info_tr">
+      <span class="node_name_span">{{node_name}}</span>
+      <table>
+        <tr v-for="(item, key) in allTagsRender" :key="key" class="node_info_tr">
         <td v-if="key!='name'">{{ key }}</td>
         <td v-if="key!='name'">{{ item }}</td>
       </tr>
@@ -20,6 +20,7 @@ export default {
   data: function () {
     return {
       all_tags: null,
+      all_tags_translated: {},
       node_type: null,
       node_id: null,
       fractions: null,
@@ -49,8 +50,18 @@ export default {
           case "name":
             return this.all_tags[key];
         }
+        if(this.all_tags[key] == "drinking_water"){
+          return "Fuente de agua potable";
+        }
+        if(this.all_tags[key] == "toilets"){
+          return "WC Público";
+        }
       }
+      return ""
     },
+    allTagsRender: function () {
+      return this.allTagsRenderMethod();
+    }
   },
   methods: {
     closePopup: function () {
@@ -62,12 +73,71 @@ export default {
     goDelete: function () {
       this.$emit("delete-click");
     },
+    allTagsRenderMethod: function () {
+      for (const key in this.all_tags) {
+        //console.log(key);
+        switch (key) {
+          case "phone":
+            this.all_tags_translated["Telefono"] = this.translateItem(this.all_tags[key]);
+            break;
+          case "phone_1":
+            this.all_tags_translated["Telefono 2"] = this.translateItem(this.all_tags[key]);
+            break;
+          case "wheelchair":
+            this.all_tags_translated["Silla de ruedas"] = this.translateItem(this.all_tags[key]);
+            break;
+          case "shelter":
+            this.all_tags_translated["Resguardada"] = this.translateItem(this.all_tags[key]);
+            break;
+          case "lit":
+            this.all_tags_translated["Iluminado"] = this.translateItem(this.all_tags[key]);
+            break;
+          case "bench":
+            this.all_tags_translated["Banco"] = this.translateItem(this.all_tags[key]);
+            break;
+          case "tactile_paving":
+            this.all_tags_translated["Pavimento táctil"] = this.translateItem(this.all_tags[key]);
+            break;
+          case "bin":
+            this.all_tags_translated["Papelera"] = this.translateItem(this.all_tags[key]);
+            break;
+          case "information":
+            this.all_tags_translated["Información"] = this.translateItem(this.all_tags[key]);
+            break;
+          case "website" || "brand:website":
+            this.all_tags_translated["Página web"] = this.translateItem(this.all_tags[key]);
+            break;
+          case "fee":
+            this.all_tags_translated["De pago"] = this.translateItem(this.all_tags[key]);
+            break;
+            case "addr:street":
+            this.all_tags_translated["Calle"] = this.translateItem(this.all_tags[key]);
+              break;
+          default:
+            //console.log(key);
+            break;
+
+        }
+      }
+        console.log("Etiquetas fixed ")
+        console.log(this.all_tags_translated);
+        return this.all_tags_translated;
+    },
+    translateItem: function (item) {
+      switch (item) {
+        case "yes":
+          return "Si";
+        default:
+          return item;
+      }
+    }
   },
   created() {
     if (this.selected) {
       let geoJsonProps = this.selected.props;
       this.all_tags = Object.assign({}, geoJsonProps);
-      console.log(this.all_tags);
+     console.log("Todas las etiquetas")
+     console.log( this.all_tags);
       delete this.all_tags.id;
       this.node_type = this.selected.node_type;
       this.node_id = this.selected.node_id;
@@ -99,6 +169,13 @@ export default {
   padding-top: 40px;
   z-index: 1;
   max-width: 300px;
+  border: 1px solid rgb(99, 00, 00);
+  box-shadow: 2px 2px rgb(99, 00, 00);
+}
+.node_name_span {
+  text-align: center;
+  padding-bottom: 20px;
+  font-weight: bolder;
 }
 .edit_box {
   margin-top: 15px;

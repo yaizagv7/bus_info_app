@@ -407,6 +407,16 @@
 				],
 				"selected": false,
 				"isOpen": false
+			},{
+				"name": "Paradas de taxi",
+				"icon": "icon_taxi",
+				"tags": [
+					[
+						"amenity",
+						"taxi"
+					]
+				],
+				"selected": false
 			}
 		],
 		"isOpen": false
