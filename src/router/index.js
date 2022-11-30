@@ -5,6 +5,7 @@ import aboutComponent from '../components/About'
 import mapComponent from '../components/Map'
 import loginComponent from '../components/Login'
 import landComponent from '../components/Land'
+import registerComponent from '../components/Register'
 
 moment.locale('ru');
 
@@ -42,6 +43,11 @@ const routes = [
         name: 'login',
         path: '/login',
         component: loginComponent
+    },    
+    {
+        name: 'register',
+        path: '/register',
+        component: registerComponent
     },
     {
         name: 'land',

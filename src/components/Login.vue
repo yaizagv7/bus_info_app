@@ -1,49 +1,64 @@
 <template>
   <div class="login-container">
-    <v-btn @click="logout" color="primary" v-if="authenticated" flat
-      >LOGOUT</v-btn
-    >
-    <div v-if="!authenticated">
-      <input
-        class="login_input"
-        type="text"
-        placeholder="Email"
-        v-model="userid"
-      />
-      <input
-        class="login_input"
-        type="password"
-        placeholder="Contraseña"
-        v-model="password"
-      />
+    <div class="login_form">
+      <v-btn :to="{ path: '/map' }" class="toMapBtn" dark>
+        <span>Volver al mapa</span>
+        <v-icon>arrow_left</v-icon>
+      </v-btn>
+      <v-btn @click="logout" color="primary" v-if="authenticated" flat
+        >LOGOUT</v-btn
+      >
+      <form @submit.prevent="findUser()" class="loginForm">
+        <div v-if="!authenticated">
+          <input
+            class="login_input"
+            type="text"
+            placeholder="Nombre de usuario"
+            v-model="loginUser.name"
+          />
+          <input
+            class="login_input"
+            type="password"
+            placeholder="Contraseña"
+            v-model="loginUser.password"
+          />
+        </div>
+        <v-btn
+          type="submit"
+          class="loginBtn"
+          color="primary"
+          v-if="!authenticated"
+          >LOGIN</v-btn
+        >
+        <router-link :to="{ path: '/register' }" dark>
+          <span>Registrarme</span>
+        </router-link>
+      </form>
     </div>
-    <v-btn @click="authenticate" color="primary" v-if="!authenticated"
-      >LOGIN</v-btn
-    >
   </div>
 </template>
 
 <script>
-    import { initializeApp } from "firebase/app";
-    import { getAnalytics } from "firebase/analytics";
-    const firebaseConfig = {
-    apiKey: "AIzaSyCPdvUivHRuvuyShLVAqxHgpYgL0w1zPQ4",
-    authDomain: "businfomapp.firebaseapp.com",
-    projectId: "businfomapp",
-    storageBucket: "businfomapp.appspot.com",
-    messagingSenderId: "436533237430",
-    appId: "1:436533237430:web:d756f6af869e4eef63f817",
-    measurementId: "G-NYZ650LFFS"
-    }
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    //let db = app.database();
+import firebase from "firebase/compat/app";
+import { getDatabase, ref, onValue } from "firebase/database";
+import config from "../config-firebase";
+
+const firebaseConfig = config;
+const app = firebase.initializeApp(firebaseConfig);
+const db = getDatabase(app);
+let raiz = ref(db, "users/");
+console.log(raiz);
 export default {
   data: function () {
     return {
-      firebase: {
-       // db: db
-    }
+      db: db,
+      raiz: raiz,
+      authenticated: false,
+      loginUser: {
+        name: "",
+        password: "",
+      },
+      logged: false,
     };
   },
   methods: {
@@ -53,26 +68,64 @@ export default {
     changeLang: function () {
       localStorage.setItem("lang", this.$i18n.locale);
     },
+    findUser: function () {
+      console.log(this.loginUser);
+      onValue(raiz, (snapshot) => {
+        const data = snapshot.val();
+        //console.log(data);
+        for (let dato in data){
+          console.log(dato);
+          if(dato == this.loginUser.name){
+            this.authenticated = true;
+            console.log('Login correcto');
+          }
+        }
+        if(this.authenticated == false){
+            console.log("El email no está registrado en nuestra BD");
+          }
+      });
+    },
   },
-  created() {
-    this.authInit();
-  },
+  created() {},
 };
 </script>
 
 <style>
 .login-container {
+  position: fixed;
+  background-image: url("../.././public/OpenStreetMap.png");
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+}
+.login_form {
+  margin: 15em auto;
   padding: 25px;
-  background-color: rgb(255, 204, 204);
-  max-width: 500px;
+  width: 300px;
+  background-color: rgb(202, 202, 202);
+  max-width: 600px;
+  min-width: 100px;
+  border-radius: 20px;
+  border: 8px solid rgb(99, 0, 0);
 }
 .login_input {
-  margin-top: 30px;
-  margin-bottom: 30px;
-  display: block;
+  width: 100%;
+  max-width: 95%;
+  height: 30px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 2px solid #fff;
+  outline: none;
+  font-size: 14px;
+  padding-left: 10px;
   background-color: white;
 }
 .language-select {
   max-width: 400px;
+}
+.toMapBtn {
+  position: fixed;
+}
+.loginForm {
 }
 </style>

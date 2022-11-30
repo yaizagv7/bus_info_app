@@ -10,7 +10,7 @@ import i18n from './i18n'
 Vue.use(Vuetify, {
     iconfont: 'md',
     theme: {
-        primary: colors.green.darken4,
+        primary: colors.red.darken4,
         secondary: colors.grey.darken1,
         accent: colors.shades.black,
         error: colors.red.accent3
