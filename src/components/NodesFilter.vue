@@ -8,11 +8,11 @@
         <li
           v-for="item in menu"
           :key="item.name"
-          @click="toggleOpen(item)"
+          @click="item.isOpen = !item.isOpen"
         >
           <hr
             style="opacity: 0.1;
-background-color: black;
+              background-color: black;
               width: 90%;
               margin-top: 30;
               margin-bottom: 0px;
@@ -89,37 +89,15 @@ export default {
       authenticated: this.$logged,
       showAll: false,
       loginUser: {},
+      resultado: []
     };
   },
   computed: {
-    menu: function () {
-      let resultado = null;
-      onValue(raiz, (snapshot) => {
-        //console.log(snapshot.val().options);
-        //console.log(JSON.stringify(snapshot.val().options));
-        resultado = snapshot.val().options;
-        // return this.menu;
-      });
-      return resultado;
-    },
+    menu: function (){
+      return this.resultado;
+    }
   },
   methods: {
-    toggleOpen: function (item) {
-      console.log(item);
-      const updates = {};
-      let ruta = ref(db, "menu/" + item);
-      console.log(ruta);
-      let isOpen = null;
-      onValue(ruta, (snapshot) => {
-        console.log(snapshot.val());
-      });
-      /*if(){
-
-      }
-      updates['/menu/' + item + '/isOpen'] = postData;
-      updates['/user-posts/' + uid + '/' + newPostKey] = postData;
-      update(raiz, '');*/
-    },
   },
   watch: {
     filter: {
@@ -129,6 +107,11 @@ export default {
       deep: true,
     },
   },
+  mounted(){
+    onValue(raiz, (snapshot) => {
+        this.resultado = snapshot.val().options;
+      });
+  }
 };
 </script>
 

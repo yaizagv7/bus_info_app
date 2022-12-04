@@ -56,6 +56,7 @@ import config from "../config-firebase";
 const firebaseConfig = config;
 const app = firebase.initializeApp(firebaseConfig);
 const db = getDatabase(app);
+let raiz = ref(db, 'users/');
 
 export default {
   data: function () {
@@ -80,9 +81,9 @@ export default {
     findUser: function () {
       console.log(this.loginUser);
       let ruta = "users/" + this.loginUser.name;
-      let raiz = ref(db, ruta);
+      let raizUser = ref(db, ruta);
       console.log(ruta);
-      onValue(raiz, (snapshot) => {
+      onValue(raizUser, (snapshot) => {
         console.log(snapshot.val());
         if(snapshot.val() == null){
           return console.log("El usaurio no existe");
@@ -170,7 +171,5 @@ export default {
 }
 .toMapBtn {
   position: fixed;
-}
-.loginForm {
 }
 </style>
