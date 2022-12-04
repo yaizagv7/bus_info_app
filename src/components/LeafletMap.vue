@@ -9,9 +9,7 @@
                 <div class="layer_btn layer_btn_last" :class="{active: activeLayer === 'ESRI sat'}" @click="setLayer('ESRI sat')">ESRI sat</div>
             </div>
             <router-link class="orm_control orm_info" to="/about" :title="$t('menu.about')"></router-link>
-            <div class="orm_control orm_layers popup_activator" :title="$t('menu.map_view')" :class="{control_active: layersPopup}"  @click="layersPopup = !layersPopup"></div>
-            <router-link class="orm_control orm_map_add_white add_green" to="/map/add" :title="$t('menu.add')"></router-link>
-            
+            <div class="orm_control orm_layers popup_activator" :title="$t('menu.map_view')" :class="{control_active: layersPopup}"  @click="layersPopup = !layersPopup"></div>            
         </div>
 
         <div class="control_bottom">

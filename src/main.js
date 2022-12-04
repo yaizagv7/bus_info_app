@@ -44,6 +44,9 @@ Vue.directive('click-outside', {
 
 Vue.config.productionTip = false;
 
+//VARIABLE GLOBAL LOGGED
+Vue.prototype.$logged = false;
+
 import 'vuetify/dist/vuetify.min.css'
 
 new Vue({

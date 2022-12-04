@@ -15,6 +15,7 @@ const routes = [
     {
         name: 'root',
         path: '/',
+        props: true,
         redirect: to => {
             return { name: 'map' };
         }
@@ -37,16 +38,19 @@ const routes = [
     {
         name: 'map',
         path: '/map/:action?',
+        props: true,
         component: mapComponent
     },
     {
         name: 'login',
         path: '/login',
+        props: true,
         component: loginComponent
     },    
     {
         name: 'register',
         path: '/register',
+        props: true,
         component: registerComponent
     },
     {

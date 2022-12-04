@@ -8,11 +8,11 @@
         <li
           v-for="item in menu"
           :key="item.name"
-          @click="item.isOpen = !item.isOpen"
+          @click="toggleOpen(item)"
         >
           <hr
-            style="opacity: 0.1; 
-            background-color: black;
+            style="opacity: 0.1;
+background-color: black;
               width: 90%;
               margin-top: 30;
               margin-bottom: 0px;
@@ -21,13 +21,25 @@
           <div class="menu1">
             {{ item.name }}
           </div>
-          <ul class="menu2" v-show="item.isOpen">
-            <li v-for="child in item.children" :key="child.name" @click.stop.prevent="child.isOpen = !child.isOpen">
-              <div v-if="child.children" v-show="item.isOpen" :class="['map_filter']" >
+          <ul class="menu2">
+            <li
+              v-for="child in item.children"
+              :key="child.name"
+              @click.stop.prevent="child.isOpen = !child.isOpen"
+            >
+              <div
+                v-if="child.children"
+                v-show="item.isOpen"
+                :class="['map_filter']"
+              >
                 {{ child.name }}
               </div>
-              <div v-else-if="!child.children" v-show="item.isOpen" :class="['map_filter']" @click.stop.prevent="
-                      $emit('launch-query', child.tags)" >
+              <div
+                v-else-if="!child.children"
+                v-show="item.isOpen"
+                :class="['map_filter']"
+                @click.stop.prevent="$emit('launch-query', child.tags)"
+              >
                 {{ child.name }}
               </div>
               <ul class="menu3" v-show="item.isOpen && child.isOpen">
@@ -35,8 +47,7 @@
                   <div
                     v-show="child.isOpen"
                     :class="['map_filter']"
-                    @click.stop.prevent="
-                      $emit('launch-query', child2.tags)"
+                    @click.stop.prevent="$emit('launch-query', child2.tags)"
                   >
                     {{ child2.name }}
                   </div>
@@ -47,20 +58,68 @@
         </li>
       </ul>
     </div>
+    <div v-if="!authenticated" class="login_btn">
+      <v-btn :to="{ path: '/map/add' }" dark>
+        <span>Iniciar Sesión</span>
+      </v-btn>
+    </div>
+    <div v-if="!authenticated" class="login_btn">
+      <v-btn :to="{ path: '/map/add' }" dark>
+        <span>Iniciar Sesión</span>
+      </v-btn>
+    </div>
   </div>
 </template>
 
 <script>
-import menu_data from "../../menu-data.json";
+import firebase from "firebase/compat/app";
+import { getDatabase, ref, onValue, update } from "firebase/database";
+import config from "../config-firebase";
+
+const firebaseConfig = config;
+const app = firebase.initializeApp(firebaseConfig);
+const db = getDatabase(app);
+let raiz = ref(db, "menu/");
 
 export default {
   name: "nodes-filter",
   props: ["filter"],
   data: function () {
     return {
-      menu: menu_data,
+      authenticated: this.$logged,
       showAll: false,
+      loginUser: {},
     };
+  },
+  computed: {
+    menu: function () {
+      let resultado = null;
+      onValue(raiz, (snapshot) => {
+        //console.log(snapshot.val().options);
+        //console.log(JSON.stringify(snapshot.val().options));
+        resultado = snapshot.val().options;
+        // return this.menu;
+      });
+      return resultado;
+    },
+  },
+  methods: {
+    toggleOpen: function (item) {
+      console.log(item);
+      const updates = {};
+      let ruta = ref(db, "menu/" + item);
+      console.log(ruta);
+      let isOpen = null;
+      onValue(ruta, (snapshot) => {
+        console.log(snapshot.val());
+      });
+      /*if(){
+
+      }
+      updates['/menu/' + item + '/isOpen'] = postData;
+      updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+      update(raiz, '');*/
+    },
   },
   watch: {
     filter: {
@@ -169,13 +228,14 @@ ul,
 li {
   list-style: none;
 }
-
-@media screen and (min-width: 700px) {
+.login_btn {
+  position: absolute;
+  bottom: 10px;
+  left: 30px;
 }
-@media screen and (min-width: 700px) {
-  .map_filter:hover {
-    background-color: rgb(0, 0, 0);
-  }
+
+.map_filter:hover {
+  background-color: rgb(0, 0, 0);
 }
 .filter_active:before {
   width: 15px;

@@ -1,13 +1,14 @@
 <template>
   <div class="login-container">
     <div class="login_form">
-      <v-btn :to="{ path: '/map' }" class="toMapBtn" dark>
+      <v-btn
+        :to="{ name: 'map', params: { authenticated: authenticated } }"
+        class="toMapBtn"
+        dark
+      >
         <span>Volver al mapa</span>
         <v-icon>arrow_left</v-icon>
       </v-btn>
-      <v-btn @click="logout" color="primary" v-if="authenticated" flat
-        >LOGOUT</v-btn
-      >
       <form @submit.prevent="findUser()" class="loginForm">
         <div v-if="!authenticated">
           <input
@@ -22,17 +23,26 @@
             placeholder="Contraseña"
             v-model="loginUser.password"
           />
+          <v-btn
+            type="submit"
+            class="loginBtn"
+            color="primary"
+            v-if="!authenticated"
+            >LOGIN</v-btn
+          >
+          <router-link :to="{ path: '/register' }" dark>
+            <span>Registrarme</span>
+          </router-link>
         </div>
-        <v-btn
-          type="submit"
-          class="loginBtn"
-          color="primary"
-          v-if="!authenticated"
-          >LOGIN</v-btn
-        >
-        <router-link :to="{ path: '/register' }" dark>
-          <span>Registrarme</span>
-        </router-link>
+        <div v-else>
+          <v-btn
+            @click.prevent="logout"
+            color="primary"
+            v-if="authenticated"
+            flat
+            >Cerrar Sesión</v-btn
+          >
+        </div>
       </form>
     </div>
   </div>
@@ -46,8 +56,7 @@ import config from "../config-firebase";
 const firebaseConfig = config;
 const app = firebase.initializeApp(firebaseConfig);
 const db = getDatabase(app);
-let raiz = ref(db, "users/");
-console.log(raiz);
+
 export default {
   data: function () {
     return {
@@ -58,9 +67,9 @@ export default {
         name: "",
         password: "",
       },
-      logged: false,
     };
   },
+  props: {},
   methods: {
     toMap: function () {
       this.$router.push({ path: "/map" });
@@ -70,23 +79,59 @@ export default {
     },
     findUser: function () {
       console.log(this.loginUser);
+      let ruta = "users/" + this.loginUser.name;
+      let raiz = ref(db, ruta);
+      console.log(ruta);
       onValue(raiz, (snapshot) => {
-        const data = snapshot.val();
-        //console.log(data);
-        for (let dato in data){
-          console.log(dato);
-          if(dato == this.loginUser.name){
-            this.authenticated = true;
-            console.log('Login correcto');
-          }
+        console.log(snapshot.val());
+        if(snapshot.val() == null){
+          return console.log("El usaurio no existe");
         }
-        if(this.authenticated == false){
-            console.log("El email no está registrado en nuestra BD");
-          }
+        const pw = snapshot.val().password;
+        if (pw == this.loginUser.password) {
+          this.authenticated = true;
+          console.log("Login correcto");
+        }
+        if (this.authenticated == false) {
+          console.log("La contraseña no es correcta");
+        }
       });
     },
+    iniciarSesion: function () {
+      var that = this;
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(
+          this.loginUser.name,
+          that.loginUser.password
+        )
+        .then(
+          function () {
+            toastr.success("Iniciaste sesión correctamente.", "Aviso");
+          },
+          function () {
+            toastr.error("El correo o la contrasena son incorrectos.", "Aviso");
+          }
+        )
+        .catch(function (error) {
+          toastr.error("Error al intentar iniciar sesión.", "Aviso");
+        });
+    },
+    cerrarSesion: function () {
+      firebase
+        .auth()
+        .signOut()
+        .then(function () {
+          // Sign-out successful.
+        })
+        .catch(function (error) {
+          toastr.error("Error al intentar cerrar sesión.", "Aviso");
+        });
+    },
+    logout: function () {
+      this.authenticated = false;
+    },
   },
-  created() {},
 };
 </script>
 
