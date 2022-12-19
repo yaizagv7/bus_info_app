@@ -6,6 +6,7 @@ import router from './router'
 import colors from 'vuetify/lib/util/colors'
 import VueAnalytics from 'vue-analytics'
 import i18n from './i18n'
+import VueCookies from 'vue-cookies';
 
 Vue.use(Vuetify, {
     iconfont: 'md',
@@ -44,8 +45,16 @@ Vue.directive('click-outside', {
 
 Vue.config.productionTip = false;
 
-//VARIABLE GLOBAL LOGGED
-Vue.prototype.$logged = false;
+//cookies LOGGED
+Vue.use(VueCookies, {
+    
+        expires: '1d', 
+        path: '/', 
+        domain: '', 
+        secure: '', 
+        sameSite: 'Lax' 
+      
+});
 
 import 'vuetify/dist/vuetify.min.css'
 

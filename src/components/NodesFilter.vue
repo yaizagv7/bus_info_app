@@ -58,12 +58,12 @@
         </li>
       </ul>
     </div>
-    <div v-if="!authenticated" class="login_btn">
+    <div v-if=" logged == 'si'" class="login_btn">
       <v-btn :to="{ path: '/map/add' }" dark>
-        <span>Iniciar Sesión</span>
+        <span>Bienvenid@</span>
       </v-btn>
     </div>
-    <div v-if="!authenticated" class="login_btn">
+    <div v-else-if="logged = 'no' || logged == ''" class="login_btn">
       <v-btn :to="{ path: '/map/add' }" dark>
         <span>Iniciar Sesión</span>
       </v-btn>
@@ -73,7 +73,7 @@
 
 <script>
 import firebase from "firebase/compat/app";
-import { getDatabase, ref, onValue, update } from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database";
 import config from "../config-firebase";
 
 const firebaseConfig = config;
@@ -86,10 +86,10 @@ export default {
   props: ["filter"],
   data: function () {
     return {
-      authenticated: this.$logged,
       showAll: false,
       loginUser: {},
-      resultado: []
+      resultado: [],
+      logged: ''
     };
   },
   computed: {
@@ -111,6 +111,8 @@ export default {
     onValue(raiz, (snapshot) => {
         this.resultado = snapshot.val().options;
       });
+    this.logged = this.$cookies.get('logged');
+    console.log('nodesfilter valor logged: ' + this.logged);
   }
 };
 </script>

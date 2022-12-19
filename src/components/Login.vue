@@ -1,16 +1,12 @@
 <template>
   <div class="login-container">
     <div class="login_form">
-      <v-btn
-        :to="{ name: 'map', params: { authenticated: authenticated } }"
-        class="toMapBtn"
-        dark
-      >
+      <v-btn :to="{ name: 'map' }" class="toMapBtn" dark>
         <span>Volver al mapa</span>
         <v-icon>arrow_left</v-icon>
       </v-btn>
-      <form @submit.prevent="findUser()" class="loginForm">
-        <div v-if="!authenticated">
+      <div v-if="logged == 'no'" class="loginForm">
+        <form @submit.prevent="findUser()">
           <input
             class="login_input"
             type="text"
@@ -27,23 +23,17 @@
             type="submit"
             class="loginBtn"
             color="primary"
-            v-if="!authenticated"
             >LOGIN</v-btn
           >
           <router-link :to="{ path: '/register' }" dark>
             <span>Registrarme</span>
           </router-link>
-        </div>
-        <div v-else>
-          <v-btn
-            @click.prevent="logout"
-            color="primary"
-            v-if="authenticated"
-            flat
-            >Cerrar Sesión</v-btn
-          >
-        </div>
-      </form>
+        </form>
+      </div>
+      <div v-else-if="logged == 'si'" class="contact_form">
+        <v-btn @click="logout" color="primary" flat>Cerrar Sesión</v-btn>
+        <contact></contact>
+      </div>
     </div>
   </div>
 </template>
@@ -52,25 +42,26 @@
 import firebase from "firebase/compat/app";
 import { getDatabase, ref, onValue } from "firebase/database";
 import config from "../config-firebase";
+import Contact from './Contact.vue';
 
 const firebaseConfig = config;
 const app = firebase.initializeApp(firebaseConfig);
 const db = getDatabase(app);
-let raiz = ref(db, 'users/');
+let raiz = ref(db, "users/");
 
 export default {
+  components: { Contact },
   data: function () {
     return {
       db: db,
       raiz: raiz,
-      authenticated: false,
+      logged: "no",
       loginUser: {
         name: "",
         password: "",
       },
     };
   },
-  props: {},
   methods: {
     toMap: function () {
       this.$router.push({ path: "/map" });
@@ -85,58 +76,42 @@ export default {
       console.log(ruta);
       onValue(raizUser, (snapshot) => {
         console.log(snapshot.val());
-        if(snapshot.val() == null){
+        if (snapshot.val() == null) {
           return console.log("El usaurio no existe");
         }
         const pw = snapshot.val().password;
         if (pw == this.loginUser.password) {
-          this.authenticated = true;
-          console.log("Login correcto");
+          this.$cookies.remove('logged');
+          this.$cookies.set('logged', 'si');
+          this.logged = this.$cookies.get('logged');
+          console.log('login' + this.logged);
         }
-        if (this.authenticated == false) {
+        if (this.logged == false) {
           console.log("La contraseña no es correcta");
         }
       });
     },
-    iniciarSesion: function () {
-      var that = this;
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(
-          this.loginUser.name,
-          that.loginUser.password
-        )
-        .then(
-          function () {
-            toastr.success("Iniciaste sesión correctamente.", "Aviso");
-          },
-          function () {
-            toastr.error("El correo o la contrasena son incorrectos.", "Aviso");
-          }
-        )
-        .catch(function (error) {
-          toastr.error("Error al intentar iniciar sesión.", "Aviso");
-        });
-    },
-    cerrarSesion: function () {
-      firebase
-        .auth()
-        .signOut()
-        .then(function () {
-          // Sign-out successful.
-        })
-        .catch(function (error) {
-          toastr.error("Error al intentar cerrar sesión.", "Aviso");
-        });
-    },
-    logout: function () {
-      this.authenticated = false;
+    logout: function () {'logged'
+      this.$cookies.remove('logged');
+      this.$cookies.set('logged', 'no');
+      console.log('logout funcion' + this.$cookies.get('logged'));
+      this.logged = this.$cookies.get('logged');
     },
   },
+  mounted(){  
+    if(!this.$cookies.get('logged')){
+      this.$cookies.set('logged', 'no');
+    }   
+    this.logged = this.$cookies.get('logged');
+    console.log('entrando a login: ' + this.logged);
+  }
 };
 </script>
 
 <style>
+.contact_form {
+  min-width: 450px;
+}
 .login-container {
   position: fixed;
   background-image: url("../.././public/OpenStreetMap.png");
@@ -147,10 +122,9 @@ export default {
 .login_form {
   margin: 15em auto;
   padding: 25px;
-  width: 300px;
+  min-width: 300px;
   background-color: rgb(202, 202, 202);
   max-width: 600px;
-  min-width: 100px;
   border-radius: 20px;
   border: 8px solid rgb(99, 0, 0);
 }
