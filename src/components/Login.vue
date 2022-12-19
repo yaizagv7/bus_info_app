@@ -19,18 +19,13 @@
             placeholder="Contraseña"
             v-model="loginUser.password"
           />
-          <v-btn
-            type="submit"
-            class="loginBtn"
-            color="primary"
-            >LOGIN</v-btn
-          >
+          <v-btn type="submit" class="loginBtn" color="primary">LOGIN</v-btn>
           <router-link :to="{ path: '/register' }" dark>
             <span>Registrarme</span>
           </router-link>
         </form>
       </div>
-      <div v-else-if="logged == 'si'" class="contact_form">
+      <div v-else-if="logged == 'si'">
         <v-btn @click="logout" color="primary" flat>Cerrar Sesión</v-btn>
         <contact></contact>
       </div>
@@ -42,7 +37,7 @@
 import firebase from "firebase/compat/app";
 import { getDatabase, ref, onValue } from "firebase/database";
 import config from "../config-firebase";
-import Contact from './Contact.vue';
+import Contact from "./Contact.vue";
 
 const firebaseConfig = config;
 const app = firebase.initializeApp(firebaseConfig);
@@ -73,7 +68,7 @@ export default {
       console.log(this.loginUser);
       let ruta = "users/" + this.loginUser.name;
       let raizUser = ref(db, ruta);
-      console.log(ruta);
+      //console.log(ruta);
       onValue(raizUser, (snapshot) => {
         console.log(snapshot.val());
         if (snapshot.val() == null) {
@@ -81,48 +76,47 @@ export default {
         }
         const pw = snapshot.val().password;
         if (pw == this.loginUser.password) {
-          this.$cookies.remove('logged');
-          this.$cookies.set('logged', 'si');
-          this.logged = this.$cookies.get('logged');
-          console.log('login' + this.logged);
+          this.$cookies.remove("logged");
+          this.$cookies.set("logged", "si");
+          this.$cookies.set("currentEmail", snapshot.val().email);
+          this.logged = this.$cookies.get("logged");
+          console.log("login" + this.logged);
         }
         if (this.logged == false) {
           console.log("La contraseña no es correcta");
         }
       });
     },
-    logout: function () {'logged'
-      this.$cookies.remove('logged');
-      this.$cookies.set('logged', 'no');
-      console.log('logout funcion' + this.$cookies.get('logged'));
-      this.logged = this.$cookies.get('logged');
+    logout: function () {
+      "logged";
+      this.$cookies.remove("logged");
+      this.$cookies.set("logged", "no");
+      console.log("logout funcion" + this.$cookies.get("logged"));
+      this.logged = this.$cookies.get("logged");
     },
   },
-  mounted(){  
-    if(!this.$cookies.get('logged')){
-      this.$cookies.set('logged', 'no');
-    }   
-    this.logged = this.$cookies.get('logged');
-    console.log('entrando a login: ' + this.logged);
-  }
+  mounted() {
+    if (!this.$cookies.get("logged")) {
+      this.$cookies.set("logged", "no");
+    }
+    this.logged = this.$cookies.get("logged");
+    console.log("entrando a login: " + this.logged);
+  },
 };
 </script>
 
 <style>
-.contact_form {
-  min-width: 450px;
-}
 .login-container {
-  position: fixed;
+  position: absolute;
   background-image: url("../.././public/OpenStreetMap.png");
   background-size: cover;
   height: 100%;
   width: 100%;
 }
 .login_form {
-  margin: 15em auto;
+  margin-top: 5%;
   padding: 25px;
-  min-width: 300px;
+  min-width: 270px;
   background-color: rgb(202, 202, 202);
   max-width: 600px;
   border-radius: 20px;
@@ -144,6 +138,6 @@ export default {
   max-width: 400px;
 }
 .toMapBtn {
-  position: fixed;
+  position: relative;
 }
 </style>
