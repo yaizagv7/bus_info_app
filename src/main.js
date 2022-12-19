@@ -7,6 +7,9 @@ import colors from 'vuetify/lib/util/colors'
 import VueAnalytics from 'vue-analytics'
 import i18n from './i18n'
 import VueCookies from 'vue-cookies';
+import vClickOutside from 'v-click-outside';  
+     
+Vue.use(vClickOutside);     
 
 Vue.use(Vuetify, {
     iconfont: 'md',

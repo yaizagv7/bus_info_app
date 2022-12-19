@@ -1,8 +1,15 @@
 <template>
-  <div class="map_filters">
+  <div>
+    <button v-if="!sideBar" class="toOpen" @click="openCloseSideBar">
+    >
+    </button>
+  <div class="map_filters" v-if="sideBar">
     <div>
       <span class="brand">Bus +Info Map</span>
     </div>
+    <button class="toClose" @click="openCloseSideBar">
+      X
+    </button>
     <div class="menu-list">
       <ul>
         <li
@@ -68,13 +75,16 @@
         <span>Iniciar Sesión</span>
       </v-btn>
     </div>
+
   </div>
+</div>
 </template>
 
 <script>
 import firebase from "firebase/compat/app";
 import { getDatabase, ref, onValue } from "firebase/database";
 import config from "../config-firebase";
+import vClickOutside from 'v-click-outside';
 
 const firebaseConfig = config;
 const app = firebase.initializeApp(firebaseConfig);
@@ -84,9 +94,13 @@ let raiz = ref(db, "menu/");
 export default {
   name: "nodes-filter",
   props: ["filter"],
+  directives: {
+      clickOutside: vClickOutside.directive
+    },
   data: function () {
     return {
-      showAll: false,
+      ocultar: true,
+      sideBar: true,
       loginUser: {},
       resultado: [],
       logged: ''
@@ -98,6 +112,9 @@ export default {
     }
   },
   methods: {
+    openCloseSideBar: function () {
+      this.sideBar = !this.sideBar;
+    }
   },
   watch: {
     filter: {
@@ -118,6 +135,18 @@ export default {
 </script>
 
 <style>
+.toOpen {
+  background-color: darkred;
+  padding: 5px;
+  color: white;
+  position: absolute;
+  top: 10px;
+}
+.toClose {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+}
 .map_filters::-webkit-scrollbar {
   -webkit-appearance: none;
 }
