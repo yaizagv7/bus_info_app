@@ -3,24 +3,6 @@
     <v-content>
       <router-view></router-view>
     </v-content>
-    <!-- <v-bottom-nav color="primary" :value="true" fixed dark>
-            <v-btn :to="{path: '/map'}" dark>
-                <span>{{ $t('menu.map') }}</span>
-                <v-icon>map</v-icon>
-            </v-btn>
-            <v-btn :to="{path: '/login'}" dark>
-                <span>{{ $t('menu.user') }}</span>
-                <v-icon>account_circle</v-icon>
-            </v-btn>
-            <v-btn :to="{path: '/about'}" dark>
-                <span>{{ $t('menu.about') }}</span>
-                <v-icon>info</v-icon>
-            </v-btn>
-            <v-btn :to="{path: '/map/add'}" dark>
-                <span>{{ $t('menu.add') }}</span>
-                <v-icon>add_circle</v-icon>
-            </v-btn>
-        </v-bottom-nav> -->
   </v-app>
 </template>
 <script>
