@@ -1,98 +1,93 @@
 <template>
   <div>
-    <button v-if="!sideBar" class="toOpen" @click="openCloseSideBar">
-    >
-    </button>
-  <div class="map_filters" v-if="sideBar">
-    <div>
-      <span class="brand">Bus +Info Map</span>
-    </div>
-    <button class="toClose" @click="openCloseSideBar">
-      X
-    </button>
-    
-    <input
-            type="search"
-            class="search"
-            v-model="search"
-            placeholder=" Buscar"
-          />
-    <div class="menu-list">
-      <ul>
-        <li
-          v-for="item in menu"
-          :key="item.name"
-          @click="item.isOpen = !item.isOpen"
-        >
-          <hr
-            style="opacity: 0.1;
-              background-color: black;
-              width: 90%;
-              margin-top: 30;
-              margin-bottom: 0px;
-            "
-          />
-          <div v-show="menu_filter(item)" class="menu1">
-            {{ item.name }}
-          </div>
-                        <!----------------------MENU 2--------------------------->
-          <ul class="menu2" >
-            <li
-              v-for="child in item.children"
-              :key="child.name"
-              @click.stop.prevent="child.isOpen = !child.isOpen"
-            >
-              <div
-                v-if="child.children"
-                v-show="child_filter(child, item)  && item.isOpen"
-                :class="['map_filter']"
+    <button v-if="!sideBar" class="toOpen" @click="openCloseSideBar">></button>
+    <div class="map_filters" v-if="sideBar">
+      <div>
+        <span class="brand">Bus +Info Map</span>
+      </div>
+      <button class="toClose" @click="openCloseSideBar">X</button>
+      <input
+        type="search"
+        class="search"
+        v-model="search"
+        placeholder=" Buscar"
+      />
+      <div class="menu-list">
+        <ul>
+          <li
+            v-for="item in menu"
+            :key="item.name"
+            @click="item.isOpen = !item.isOpen"
+          >
+            <hr
+              style="
+                opacity: 0.1;
+                background-color: black;
+                width: 90%;
+                margin-top: 30;
+                margin-bottom: 0px;
+              "
+            />
+            <div v-show="menu_filter(item)" class="menu1">
+              {{ item.name }}
+            </div>
+            <!----------------------MENU 2--------------------------->
+            <ul class="menu2">
+              <li
+                v-for="child in item.children"
+                :key="child.name"
+                @click.stop.prevent="child.isOpen = !child.isOpen"
               >
-                {{ child.name }}
-              </div>
-              <div
-                v-else-if="!child.children"
-                v-show="child_filter(child, item) && item.isOpen"
-                :class="['map_filter']"
-                @click.stop.prevent="$emit('launch-query', child.tags)"
-              >
-                {{ child.name }}
-              </div>
-              <ul class="menu3" v-show="item.isOpen && child.isOpen">
-                <li v-for="child2 in child.children" :key="child2.name">
-                  <div
-                    v-show="child.isOpen"
-                    :class="['map_filter']"
-                    @click.stop.prevent="$emit('launch-query', child2.tags)"
-                  >
-                    {{ child2.name }}
-                  </div>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
+                <div
+                  v-if="child.children"
+                  v-show="child_filter(child, item) && item.isOpen"
+                  :class="['map_filter']"
+                >
+                  {{ child.name }}
+                </div>
+                <div
+                  v-else-if="!child.children"
+                  v-show="child_filter(child, item) && item.isOpen"
+                  :class="['map_filter']"
+                  @click.stop.prevent="$emit('launch-query', child.tags)"
+                >
+                  {{ child.name }}
+                </div>
+                <ul class="menu3" v-show="item.isOpen && child.isOpen">
+                  <li v-for="child2 in child.children" :key="child2.name">
+                    <div
+                      v-show="child.isOpen"
+                      :class="['map_filter']"
+                      @click.stop.prevent="$emit('launch-query', child2.tags)"
+                    >
+                      {{ child2.name }}
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div v-if="logged == 'si'" class="login_btn">
+        <v-btn :to="{ path: '/map/add' }" dark>
+          <span>Bienvenid@</span>
+        </v-btn>
+      </div>
+      <div v-else-if="(logged = 'no' || logged == '')" class="login_btn">
+        <v-btn :to="{ path: '/map/add' }" dark>
+          <span>Iniciar Sesión</span>
+        </v-btn>
+      </div>
     </div>
-    <div v-if=" logged == 'si'" class="login_btn">
-      <v-btn :to="{ path: '/map/add' }" dark>
-        <span>Bienvenid@</span>
-      </v-btn>
-    </div>
-    <div v-else-if="logged = 'no' || logged == ''" class="login_btn">
-      <v-btn :to="{ path: '/map/add' }" dark>
-        <span>Iniciar Sesión</span>
-      </v-btn>
-    </div>
-
   </div>
-</div>
 </template>
 
 <script>
 import firebase from "firebase/compat/app";
 import { getDatabase, ref, onValue } from "firebase/database";
 import config from "../config-firebase";
-import vClickOutside from 'v-click-outside';
+import vClickOutside from "v-click-outside";
 
 const firebaseConfig = config;
 const app = firebase.initializeApp(firebaseConfig);
@@ -103,22 +98,22 @@ export default {
   name: "nodes-filter",
   props: ["filter"],
   directives: {
-      clickOutside: vClickOutside.directive
-    },
+    clickOutside: vClickOutside.directive,
+  },
   data: function () {
     return {
       ocultar: true,
       sideBar: true,
       loginUser: {},
       resultado: [],
-      logged: '',
-      search: ''
+      logged: "",
+      search: "",
     };
   },
   computed: {
-    menu: function (){
+    menu: function () {
       return this.resultado;
-    }
+    },
   },
   methods: {
     openCloseSideBar: function () {
@@ -128,8 +123,7 @@ export default {
       var valThis = this.search.toLowerCase();
       if (!valThis || valThis == "") {
         return true;
-      }
-      else if (item.name.toLowerCase().includes(valThis)) {
+      } else if (item.name.toLowerCase().includes(valThis)) {
         //item.isOpen = true;
         return true;
       }
@@ -138,11 +132,10 @@ export default {
     child_filter(child, item) {
       var valThis = this.search.toLowerCase();
       if (valThis != "") {
-        if(item.name.toLowerCase().includes(valThis)){
+        if (item.name.toLowerCase().includes(valThis)) {
           //item.isOpen = true;
           return true;
-        }
-        else if(child.name.toLowerCase().includes(valThis)) {
+        } else if (child.name.toLowerCase().includes(valThis)) {
           item.isOpen = true;
           return true;
         }
@@ -150,7 +143,7 @@ export default {
         return true;
       }
       return false;
-    }
+    },
   },
   watch: {
     filter: {
@@ -160,13 +153,13 @@ export default {
       deep: true,
     },
   },
-  mounted(){
+  mounted() {
     onValue(raiz, (snapshot) => {
-        this.resultado = snapshot.val().options;
-      });
-    this.logged = this.$cookies.get('logged');
-    console.log('nodesfilter valor logged: ' + this.logged);
-  }
+      this.resultado = snapshot.val().options;
+    });
+    this.logged = this.$cookies.get("logged");
+    console.log("nodesfilter valor logged: " + this.logged);
+  },
 };
 </script>
 
