@@ -27,6 +27,16 @@ Seguir el tutorial [Capacitor: de Vue a APK](https://gerardofloresgr.medium.com/
 
 [Crear apk en Android Studio](https://code.tutsplus.com/es/tutorials/how-to-generate-apk-and-signed-apk-files-in-android-studio--cms-37927 )
 
+
+## Deployment
+
+Commands:
+- npm install -g firebase-tools
+- firebase login
+- firebase init
+- firebase serve
+- firebase deploy
+
 ## OSM Tags & data
 
 Las etiquetas de búsqueda y las opciones del menú se encuentran en el directorio **src/menu-data.json**.

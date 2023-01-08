@@ -2,13 +2,13 @@
   <div class="node_info">
     <span class="p_close" @click="closePopup">×</span>
       <span class="node_name_span">{{node_name}}</span>
-      <table>
-        <tr v-for="(item, key) in allTagsRender" :key="key" class="node_info_tr">
+    <table>
+      <tr v-for="(item, key) in allTagsRender" :key="key" class="node_info_tr">
         <td v-if="key!='name'">{{ key }}</td>
         <td v-if="key!='name'">{{ item }}</td>
       </tr>
     </table>
-
+    <span id="no_info"> Se añadirán más datos próximamente</span>
     <div v-if="description" class="f_description">{{ description }}</div>
   </div>
 </template>
@@ -55,6 +55,15 @@ export default {
         }
         if(this.all_tags[key] == "toilets"){
           return "WC Público";
+        }
+        if(key == "parking" && this.all_tags[key] == "underground"){
+          return "Parking subterráneo";
+        }
+        if(key == "parking" && this.all_tags[key] == "surface"){
+          return "Parking superficie";
+        }
+        if(this.all_tags[key] == "motorcycle_parking"){
+          return "Aparcamiento para motos";
         }
       }
       return ""
@@ -156,6 +165,10 @@ export default {
 <style>
 .node_info_tr:hover {
   background: #f6f6f6;
+}
+#no_info {
+  color: grey;
+  font-size: smaller;
 }
 .node_info {
   max-height: 95vh;

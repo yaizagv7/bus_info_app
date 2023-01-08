@@ -57,7 +57,6 @@ import overpassMixin from "../mixins/Overpass";
 import oauthMixin from "../mixins/Oauth";
 import NodesFilter from "./NodesFilter";
 import NodeInfo from "./NodeInfo";
-//import Filter from "../mixins/Filter";
 import LeafletMap from "./LeafletMap";
 import L from "leaflet";
 import "leaflet.snogylop";
@@ -123,7 +122,8 @@ export default {
           if (
             feature.properties.public_transport == "platform" ||
             feature.properties.hasOwnProperty("amenity") ||
-            feature.properties.hasOwnProperty("parking")
+            feature.properties.hasOwnProperty("parking") ||
+            feature.properties.hasOwnProperty("leisure") 
           ) {
             return {
               opacity: 1,
@@ -134,7 +134,7 @@ export default {
               radius: 6,
               zIndex: 5,
             };
-          } else if (feature.id.includes("way")) {
+          } else if (feature.id.includes("relation")) {
             //console.log(feature);
             return {
               //pointerEvents: none,

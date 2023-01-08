@@ -10,6 +10,13 @@
     <button class="toClose" @click="openCloseSideBar">
       X
     </button>
+    
+    <input
+            type="search"
+            class="search"
+            v-model="search"
+            placeholder=" Buscar"
+          />
     <div class="menu-list">
       <ul>
         <li
@@ -25,10 +32,11 @@
               margin-bottom: 0px;
             "
           />
-          <div class="menu1">
+          <div v-show="menu_filter(item)" class="menu1">
             {{ item.name }}
           </div>
-          <ul class="menu2">
+                        <!----------------------MENU 2--------------------------->
+          <ul class="menu2" >
             <li
               v-for="child in item.children"
               :key="child.name"
@@ -36,14 +44,14 @@
             >
               <div
                 v-if="child.children"
-                v-show="item.isOpen"
+                v-show="child_filter(child, item)  && item.isOpen"
                 :class="['map_filter']"
               >
                 {{ child.name }}
               </div>
               <div
                 v-else-if="!child.children"
-                v-show="item.isOpen"
+                v-show="child_filter(child, item) && item.isOpen"
                 :class="['map_filter']"
                 @click.stop.prevent="$emit('launch-query', child.tags)"
               >
@@ -103,7 +111,8 @@ export default {
       sideBar: true,
       loginUser: {},
       resultado: [],
-      logged: ''
+      logged: '',
+      search: ''
     };
   },
   computed: {
@@ -114,6 +123,33 @@ export default {
   methods: {
     openCloseSideBar: function () {
       this.sideBar = !this.sideBar;
+    },
+    menu_filter: function (item) {
+      var valThis = this.search.toLowerCase();
+      if (!valThis || valThis == "") {
+        return true;
+      }
+      else if (item.name.toLowerCase().includes(valThis)) {
+        //item.isOpen = true;
+        return true;
+      }
+      return false;
+    },
+    child_filter(child, item) {
+      var valThis = this.search.toLowerCase();
+      if (valThis != "") {
+        if(item.name.toLowerCase().includes(valThis)){
+          //item.isOpen = true;
+          return true;
+        }
+        else if(child.name.toLowerCase().includes(valThis)) {
+          item.isOpen = true;
+          return true;
+        }
+      } else if (valThis == "") {
+        return true;
+      }
+      return false;
     }
   },
   watch: {
@@ -147,6 +183,17 @@ export default {
   top: 5px;
   left: 10px;
 }
+
+.search {
+  outline: none;
+  border: 1;
+  margin-left: 35px;
+  padding-top: 7px;
+  padding-bottom: 9px;
+  font-size: 10px;
+  font: small-caption !important;
+}
+
 .map_filters::-webkit-scrollbar {
   -webkit-appearance: none;
 }

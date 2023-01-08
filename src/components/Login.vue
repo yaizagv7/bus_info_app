@@ -114,7 +114,7 @@ export default {
   width: 100%;
 }
 .login_form {
-  margin-top: 150px;
+  margin-top: 5%;
   margin-left: auto;
   margin-right: auto;
   padding: 25px;
