@@ -19,7 +19,7 @@
             :key="item.name"
             @click="item.isOpen = !item.isOpen"
           >
-            <hr
+          <hr
               style="
                 opacity: 0.1;
                 background-color: black;
@@ -43,7 +43,7 @@
                   v-show="child_filter(child, item) && item.isOpen"
                   :class="['map_filter']"
                 >
-                  {{ child.name }}
+                  {{ child.name  + " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ↓ " }}
                 </div>
                 <div
                   v-else-if="!child.children"
@@ -60,7 +60,7 @@
                       :class="['map_filter']"
                       @click.stop.prevent="$emit('launch-query', child2.tags)"
                     >
-                      {{ child2.name }}
+                      {{ child2.name }} 
                     </div>
                   </li>
                 </ul>
@@ -71,7 +71,7 @@
       </div>
       <div v-if="logged == 'si'" class="login_btn">
         <v-btn :to="{ path: '/map/add' }" dark>
-          <span>Bienvenid@</span>
+          <span>Bienvenido/a</span>
         </v-btn>
       </div>
       <div v-else-if="(logged = 'no' || logged == '')" class="login_btn">

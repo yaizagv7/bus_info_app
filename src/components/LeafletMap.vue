@@ -105,6 +105,7 @@
             getDefaultCoords: function (lang) {
                 let coords = {
                     en: {lat: 51.5, lng: -0.1, zoom: 13},
+                    es: {lat: 42.3, lng: -3.7, zoom: 13},
                     ru: {lat: 55.75, lng: 37.61, zoom: 13},
                     fr: {lat: 48.84, lng: 2.35, zoom: 13},
                     pt: {lat: 38.72, lng: -9.14, zoom: 14},

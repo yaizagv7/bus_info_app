@@ -2,16 +2,6 @@
     <div class="about-container">
         <div class="page_header">
             <router-link class="orm_logo" aria-label="Map" to="/map"></router-link>
-            <div class="account_box">
-                <div v-if="authenticated">
-                    {{ $t('message.username') }} 
-                    <div class="user_line"><b>{{ username }}</b> <span class="link" @click="logout" color="primary" v-if="authenticated" :title="$t('button.logout')">×</span></div>
-                    <!-- <v-btn @click="toMap" color="primary">{{ $t('button.toMap') }}</v-btn> -->
-                </div>
-                
-                <div class="link" @click="authenticate" color="primary" v-if="!authenticated">{{ $t('button.login') }}</div>
-            </div>
-            <router-link class="map_icon orm_control" aria-label="Map" to="/map" :title="$t('menu.map')"></router-link>
         </div>
         <div class="page_content">
             

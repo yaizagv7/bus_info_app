@@ -65,7 +65,7 @@
     "seeMore": "See more"
   },
   "about": {
-    "app": "{0} is an app for viewing and adding places that accepts waste for recycling.",
+    "app": "{0} is an app for viewing bus stops and adding places that can be useful.",
     "dataHeader": "Data",
     "data": "This app uses an open data from {0}. OSM is a project of creating an open source map by thousands volunteers all over the globe. The data is free to use and it has ODbL license.",
     "contributingHeader": "How to contribute",

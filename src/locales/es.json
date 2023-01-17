@@ -21,26 +21,6 @@
     "signUp": "Si aún no tiene una cuenta, puede registrarse fácilmente en el siguiente enlace.",
     "devBy": "Desarrollado por"
   },
-  "fraction": {
-    "wasteDisposal": "Contenedor de residuos",
-    "anyRecycling": "Cualquier reciclaje",
-    "paper": "Papel",
-    "cans": "Latas",
-    "glass": "Vidrio",
-    "glass_bottles": "Botellas de vidrio",
-    "batteries": "Baterías",
-    "plastic": "Plásticos",
-    "plastic_bottles": "Botellas de plástico",
-    "plastic_packaging": "Embases de plástico",
-    "plastic_bags": "Sacos de plástico",
-    "hazardous_waste": "Resíduos peligrosos",
-    "clothes": "Ropa",
-    "low_energy_bulbs": "Bombillas de bajo consumo",
-    "scrap_metal": "Chatarra",
-    "tyres": "Neumáticos",
-    "car_batteries": "Baterías de coche",
-    "engine_oil": "Aceite de motor"
-  },
   "menu": {
     "map": "Mapa",
     "user": "Usuario",
@@ -60,7 +40,7 @@
     "seeMore": "Ver más"
   },
   "about": {
-    "app": "{0} es una aplicación para ver y agregar lugares que aceptan desechos para reciclar. ",
+    "app": "{0} es una aplicación para ver las distintas paradas de autobus de la ciudad de Burgos y agregar lugares que puedan resultar utiles. ",
     "dataHeader": "Datos",
     "data": "Esta aplicación utiliza datos abiertos de {0}. OSM es un proyecto de creación de un mapa de código abierto por miles de voluntarios en todo el mundo. Los datos son de uso gratuito y tienen licencia ODbL.",
     "contributingHeader": "Cómo contribuir?",

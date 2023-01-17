@@ -32,9 +32,9 @@ Seguir el tutorial [Capacitor: de Vue a APK](https://gerardofloresgr.medium.com/
 
 Commands:
 - npm install -g firebase-tools
+- npm run build
 - firebase login
-- firebase init
-- firebase serve
+- firebase init (dist folder)
 - firebase deploy
 
 ## OSM Tags & data

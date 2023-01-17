@@ -8,8 +8,8 @@
         <td v-if="key!='name'">{{ item }}</td>
       </tr>
     </table>
-    <span id="no_info"> Se añadirán más datos próximamente</span>
     <div v-if="description" class="f_description">{{ description }}</div>
+    <span id="no_info"> Se añadirán más datos próximamente</span>
   </div>
 </template>
 
